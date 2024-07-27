@@ -6,7 +6,6 @@ import Player from "./components/Player";
 
 function App() {
   const inputHandler = useInput([
-    "Escape",
     "w",
     "a",
     "s",
@@ -15,14 +14,32 @@ function App() {
     "ArrowLeft",
     "ArrowDown",
     "ArrowRight",
+    "Escape",
     "Tab",
     "Space",
   ]);
 
   return (
-    <div className="wrapper">
-      <div className="container">
-        <Stage width={640} height={480} options={{ background: "#222222" }}>
+    <div className="app">
+      <header className="header">
+        <h1>dev</h1>
+      </header>
+      <main className="main">
+        <div className="ui-container">
+          <div className="side-bar">
+            <p>Hello, world.</p>
+            <span>My life is going.</span>
+            <br />
+            <button>???</button>
+            <button>!!!</button>
+          </div>
+        </div>
+        <Stage
+          className="stage"
+          width={640}
+          height={480}
+          options={{ background: "#222222" }}
+        >
           <Container x={0} y={0}>
             <Text
               text={
@@ -48,7 +65,7 @@ function App() {
             <Player inputHandler={inputHandler} />
           </Container>
         </Stage>
-      </div>
+      </main>
     </div>
   );
 }

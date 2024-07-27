@@ -1,9 +1,52 @@
-.wrapper {
+.app {
   width: 100vw;
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: white;
   background-size: cover;
+}
+
+.header {
+  width: 100vw;
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  background-color: black;
+  color: red;
+}
+
+.main {
+  width: 100vw;
+  height: 90vh;
+  justify-content: center;
+  align-items: center;
+  color: red;
+}
+
+.ui-container {
+  width: 640px;
+  height: 480px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  z-index: 10;
+
+  display: flex;
+  flex-flow: row-reverse;
+}
+
+.side-bar {
+  background-color: antiquewhite;
+}
+
+.stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
