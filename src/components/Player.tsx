@@ -2,31 +2,42 @@ import { useEffect, useState } from "react";
 import Vector2 from "./Vector2";
 import { Sprite, useTick } from "@pixi/react";
 import img from "../assets/vite.png";
-import { InputHandlers } from "./useInputs";
+import { InputHandler } from "./useInput";
 
 interface PlayerProps {
-  inputHandlers: InputHandlers;
+  inputHandler: InputHandler;
 }
 
-function Player(props: PlayerProps) {
+function Player({ inputHandler }: PlayerProps) {
   // 位置
   const [position, setPosition] = useState(new Vector2(0, 0));
   // 速度
   const [velocity, setVelocity] = useState(new Vector2(0, 0));
-  const [count, setCount] = useState(0);
+  const [speed, setSpeed] = useState(640 / 10 / 60);
 
   useEffect(() => {
     console.log("Initialize Player");
-    props.inputHandlers.addInputDownHandler("a", () => {
-      console.log("hi");
-    });
+
     return () => {
       console.log("Unmount Player");
     };
   }, []);
 
   useTick((delta) => {
-    setPosition(position.plus(new Vector2(1, 0)));
+    const vel = new Vector2(0, 0);
+    if (inputHandler.getInputState("ArrowUp")) {
+      vel.y -= speed;
+    }
+    if (inputHandler.getInputState("ArrowLeft")) {
+      vel.x -= speed;
+    }
+    if (inputHandler.getInputState("ArrowDown")) {
+      vel.y += speed;
+    }
+    if (inputHandler.getInputState("ArrowRight")) {
+      vel.x += speed;
+    }
+    setPosition(position.plus(vel));
   });
 
   return <Sprite image={img} x={position.x} y={position.y} anchor={0.5} />;

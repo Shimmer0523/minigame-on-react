@@ -1,16 +1,20 @@
 import "./App.css";
 import { TextStyle } from "pixi.js";
 import { Stage, Container, Text } from "@pixi/react";
-import useInputs from "./components/useInputs";
+import useInput from "./components/useInput";
 import Player from "./components/Player";
 
 function App() {
-  const inputHandlers = useInputs([
+  const inputHandler = useInput([
     "Escape",
     "w",
     "a",
     "s",
     "d",
+    "ArrowUp",
+    "ArrowLeft",
+    "ArrowDown",
+    "ArrowRight",
     "Tab",
     "Space",
   ]);
@@ -22,7 +26,7 @@ function App() {
           <Container x={0} y={0}>
             <Text
               text={
-                inputHandlers.getInputState("a").toString() +
+                inputHandler.getInputState("a").toString() +
                 Math.random().toString()
               }
               anchor={0}
@@ -41,7 +45,7 @@ function App() {
                 })
               }
             ></Text>
-            <Player inputHandlers={inputHandlers} />
+            <Player inputHandler={inputHandler} />
           </Container>
         </Stage>
       </div>
