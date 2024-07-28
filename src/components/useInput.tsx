@@ -150,7 +150,12 @@ function useInput(targetKeys: string[], targetButtons: number[]): InputHandler {
 
     // マウス位置イベント
     const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition(new Vector2(event.offsetX, event.offsetY));
+      const target = event.target as HTMLElement;
+      if (target) {
+        if (target.className == "overlay") {
+          setMousePosition(new Vector2(event.offsetX, event.offsetY));
+        }
+      }
     };
 
     // マウスDownイベント

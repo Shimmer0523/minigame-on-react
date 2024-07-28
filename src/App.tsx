@@ -31,7 +31,7 @@ function App() {
         <h1>dev</h1>
       </header>
       <main className="main">
-        <div className="ui-container">
+        <div className="overlay">
           <div className="side-bar">
             <p>Hello, world.</p>
             <span>My life is going.</span>
