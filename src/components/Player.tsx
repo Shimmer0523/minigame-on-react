@@ -25,19 +25,8 @@ function Player({ inputHandler }: PlayerProps) {
 
   useTick((delta) => {
     const vel = new Vector2(0, 0);
-    if (inputHandler.getInputState("ArrowUp")) {
-      vel.y -= speed;
-    }
-    if (inputHandler.getInputState("ArrowLeft")) {
-      vel.x -= speed;
-    }
-    if (inputHandler.getInputState("ArrowDown")) {
-      vel.y += speed;
-    }
-    if (inputHandler.getInputState("ArrowRight")) {
-      vel.x += speed;
-    }
-    setPosition(position.plus(vel));
+    const mousePosition = inputHandler.getMousePosiotion();
+    setPosition(mousePosition);
   });
 
   return <Sprite image={img} x={position.x} y={position.y} anchor={0.5} />;
