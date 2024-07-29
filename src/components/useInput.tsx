@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Vector2 from "./Vector2";
 
 export interface InputHandler {
@@ -222,9 +222,12 @@ function useInput(targetKeys: string[], targetButtons: number[]): InputHandler {
    * @param key 入力キー
    * @returns 入力状態
    */
-  function getKeyState(key: string) {
-    return keyRecord[key];
-  }
+  const getKeyState = useCallback(
+    (key: string) => {
+      return keyRecord[key];
+    },
+    [keyRecord]
+  );
 
   /**
    *
@@ -232,12 +235,15 @@ function useInput(targetKeys: string[], targetButtons: number[]): InputHandler {
    * @param callback 登録するコールバック関数
    * @returns 登録ID
    */
-  function addKeyDownCallback(key: string, callback: () => void): number {
-    const id = Math.floor(Math.random() * 10000);
-    keyDownCallbackRecord[key].set(id, callback);
+  const addKeyDownCallback = useCallback(
+    (key: string, callback: () => void): number => {
+      const id = Math.floor(Math.random() * 10000);
+      keyDownCallbackRecord[key].set(id, callback);
 
-    return id;
-  }
+      return id;
+    },
+    [keyDownCallbackRecord]
+  );
 
   /**
    *
@@ -245,47 +251,59 @@ function useInput(targetKeys: string[], targetButtons: number[]): InputHandler {
    * @param callback 登録するコールバック関数
    * @returns 登録ID
    */
-  function addKeyUpCallback(key: string, callback: () => void): number {
-    const id = Math.floor(Math.random() * 10000);
-    keyUpCallbackRecord[key].set(id, callback);
+  const addKeyUpCallback = useCallback(
+    (key: string, callback: () => void): number => {
+      const id = Math.floor(Math.random() * 10000);
+      keyUpCallbackRecord[key].set(id, callback);
 
-    return id;
-  }
-
-  /**
-   *
-   * @param key 登録されているキー
-   * @param id 削除するID
-   */
-  function deleteKeyDownCallback(key: string, id: number) {
-    keyDownCallbackRecord[key].delete(id);
-  }
+      return id;
+    },
+    [keyUpCallbackRecord]
+  );
 
   /**
    *
    * @param key 登録されているキー
    * @param id 削除するID
    */
-  function deleteKeyUpCallback(key: string, id: number) {
-    keyDownCallbackRecord[key].delete(id);
-  }
+  const deleteKeyDownCallback = useCallback(
+    (key: string, id: number) => {
+      keyDownCallbackRecord[key].delete(id);
+    },
+    [keyDownCallbackRecord]
+  );
+
+  /**
+   *
+   * @param key 登録されているキー
+   * @param id 削除するID
+   */
+  const deleteKeyUpCallback = useCallback(
+    (key: string, id: number) => {
+      keyDownCallbackRecord[key].delete(id);
+    },
+    [keyDownCallbackRecord]
+  );
 
   /**
    *
    * @returns マウスの位置
    */
-  function getMousePosiotion() {
+  const getMousePosiotion = useCallback(() => {
     return mousePosition;
-  }
+  }, [mousePosition]);
 
   /**
    *
    * @param button 入力キー
    * @returns 入力状態
    */
-  function getButtonState(button: number) {
-    return buttonRecord[button];
-  }
+  const getButtonState = useCallback(
+    (button: number) => {
+      return buttonRecord[button];
+    },
+    [buttonRecord]
+  );
 
   /**
    *
@@ -293,12 +311,15 @@ function useInput(targetKeys: string[], targetButtons: number[]): InputHandler {
    * @param callback 登録するコールバック関数
    * @returns 登録ID
    */
-  function addButtonDownCallback(button: number, callback: () => void): number {
-    const id = Math.floor(Math.random() * 10000);
-    buttonDownCallbackRecord[button].set(id, callback);
+  const addButtonDownCallback = useCallback(
+    (button: number, callback: () => void): number => {
+      const id = Math.floor(Math.random() * 10000);
+      buttonDownCallbackRecord[button].set(id, callback);
 
-    return id;
-  }
+      return id;
+    },
+    [buttonDownCallbackRecord]
+  );
 
   /**
    *
@@ -306,30 +327,33 @@ function useInput(targetKeys: string[], targetButtons: number[]): InputHandler {
    * @param callback 登録するコールバック関数
    * @returns 登録ID
    */
-  function addButtonUpCallback(button: number, callback: () => void): number {
-    const id = Math.floor(Math.random() * 10000);
-    buttonUpCallbackRecord[button].set(id, callback);
+  const addButtonUpCallback = useCallback(
+    (button: number, callback: () => void): number => {
+      const id = Math.floor(Math.random() * 10000);
+      buttonUpCallbackRecord[button].set(id, callback);
 
-    return id;
-  }
-
-  /**
-   *
-   * @param button 登録されているキー
-   * @param id 削除するID
-   */
-  function deleteButtonDownCallback(button: number, id: number) {
-    buttonDownCallbackRecord[button].delete(id);
-  }
+      return id;
+    },
+    [buttonUpCallbackRecord]
+  );
 
   /**
    *
    * @param button 登録されているキー
    * @param id 削除するID
    */
-  function deleteButtonUpCallback(button: number, id: number) {
+  const deleteButtonDownCallback = useCallback((button: number, id: number) => {
     buttonDownCallbackRecord[button].delete(id);
-  }
+  }, []);
+
+  /**
+   *
+   * @param button 登録されているキー
+   * @param id 削除するID
+   */
+  const deleteButtonUpCallback = useCallback((button: number, id: number) => {
+    buttonDownCallbackRecord[button].delete(id);
+  }, []);
 
   // 外部メソッドを返す
   return {

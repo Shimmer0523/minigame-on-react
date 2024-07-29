@@ -3,7 +3,7 @@ import { TextStyle } from "pixi.js";
 import { Stage, Container, Text } from "@pixi/react";
 import useInput from "./components/useInput";
 import Player from "./components/Player";
-import { useRef } from "react";
+import { useCallback, useRef } from "react";
 
 function App() {
   const stageRef = useRef(null);
